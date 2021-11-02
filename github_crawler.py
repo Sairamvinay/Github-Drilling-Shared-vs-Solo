@@ -27,15 +27,21 @@ import math
 # Constants #
 #############
 
+#MONTH = '01'
+#YEAR = '2020'
+START_MONTH = '10'
+START_YEAR = '2020'
+END_MONTH = '09'
+END_YEAR = '2021'
+
 URL = "https://api.github.com/search/repositories?q="  # The basic URL to use the GitHub API
 #QUERY = "user:rsain"  # The personalized query (for instance, to get repositories from user 'rsain')
-SUB_QUERIES = ["+created%3A<%3D2021-03-31",
-              "+created%3A>%3D2014-01-01"]  # Different sub-queries if you need to collect more than 1000 elements
+#SUB_QUERIES = ["+created%3A2019-09-30..2020-09-30"]  # Different sub-queries if you need to collect more than 1000 elements
+#2019-09-30..2020-09-30
 PARAMETERS = "&per_page=100"  # Additional parameters for the query (by default 100 items per page)
-DELAY_BETWEEN_QUERIES = 10  # The time to wait between different queries to GitHub (to avoid be banned)
+DELAY_BETWEEN_QUERIES = 60  # The time to wait between different queries to GitHub (to avoid be banned)
 OUTPUT_FOLDER = "GitHub-Crawler/"  # Folder where ZIP files will be stored
-OUTPUT_CSV_FILE = "GitHub-Crawler/repositories.csv"  # Path to the CSV file generated as output
-
+MONTH_TO_DAY = {'01':31, '02':27, '03':31, '04':30, '05':31, '06':30, '07':31, '08':31, '09':30, '10':31, '11':30, '12':31}
 
 #############
 # Functions #
@@ -44,65 +50,85 @@ OUTPUT_CSV_FILE = "GitHub-Crawler/repositories.csv"  # Path to the CSV file gene
 def getUrl(url):
     """ Given a URL it returns its body """
     response = requests.get(url)
+    if response.status_code != 200:
+        return False 
     return response.json()
 
+def build_url(day,month,year):
 
+    curr_day = str(day).zfill(2)
+
+    date_range = '+created%3A' + year + '-' + month + '-' + curr_day 
+    return URL + date_range + PARAMETERS
 ########
 # MAIN #
 ########
+list_of_months = []
+for m in range(int(START_MONTH),1 + int(END_MONTH) + 12):
+    val = m
+    if m >= 13:
+        val = 1 + (m%13)
 
-# To save the number of repositories processed
-countOfRepositories = 0
+    if val < 10:
+        list_of_months.append('0' + str(val))
 
-# Output CSV file which will contain information about repositories
-csv_file = open(OUTPUT_CSV_FILE, 'w')
-repositories = csv.writer(csv_file, delimiter=',')
-repositories.writerow(["Username","Repository name","URL"])
-# Run queries to get information in json format and download ZIP file for each repository
-for subquery in range(1, len(SUB_QUERIES) + 1):
-    print("Processing subquery " + str(subquery) + " of " + str(len(SUB_QUERIES)) + " ...")
+    else:
+        list_of_months.append(str(val))
+
+list_of_years = []
+for m in range(int(START_MONTH),1 + int(END_MONTH)+12):
+    if (m) > 12:
+        list_of_years.append(END_YEAR)
+
+    else:
+        list_of_years.append(START_YEAR)
+
+
+for month,year in zip(list_of_months,list_of_years):
+
+    # To save the number of repositories processed
+    countOfRepositories = 0
+
+    print("Processing this month: ",month, " and year: ",year)
+
+    # Output CSV file which will contain information about repositories
+    OUTPUT_CSV_FILE = f"repositories_{month}_{year}.csv"  # Path to the CSV file generated as output
+    csv_file = open(OUTPUT_CSV_FILE, 'w')
+    repositories = csv.writer(csv_file, delimiter=',')
+    repositories.writerow(["Username","Repository name","URL"])
+    # Run queries to get information in json format and download ZIP file for each repository
     # Obtain the number of pages for the current subquery (by default each page contains 100 items)
-    #url = URL + QUERY + str(SUB_QUERIES[subquery - 1]) + PARAMETERS
-    url = URL + str(SUB_QUERIES[subquery - 1]) + PARAMETERS
-    data = json.loads(json.dumps(getUrl(url)))
-    numberOfPages = int(math.ceil(data['total_count'] / 100.0))
-    print("No. of pages = " + str(numberOfPages))
+    for day in range(1, MONTH_TO_DAY[month]):
+        url = build_url(day,month,year)
 
-    # Results are in different pages
-    for currentPage in range(1, numberOfPages + 1):
-        print("Processing page " + str(currentPage) + " of " + str(numberOfPages) + " ...")
-        #url = URL + QUERY + str(SUB_QUERIES[subquery - 1]) + PARAMETERS + "&page=" + str(currentPage)
-        url = URL + str(SUB_QUERIES[subquery - 1]) + PARAMETERS + "&page=" + str(currentPage)
+        print('Day is ', day, 'url is: ', url)
         data = json.loads(json.dumps(getUrl(url)))
-        if countOfRepositories > 100:
-            print("DONE! " + str(countOfRepositories) + " repositories have been processed.")
-            csv_file.close()
-            exit()
+        numberOfPages = int(math.ceil(data['total_count'] / 100.0))
+        print("No. of pages = " + str(numberOfPages))
 
-        # Iteration over all the repositories in the current json content page
-        try:
-            for item in data['items']:
-                # Obtain user and repository names
-                user = item['owner']['login']
-                repository = item['name']
-                url = item['clone_url']
-                repositories.writerow([user, repository,url])
-                # Download the zip file of the current project
-                #print("Downloading repository '%s' from user '%s' ..." % (repository, user))
-                # url = item['clone_url']
-                #fileToDownload = url[0:len(url) - 4] + "/archive/master.zip"
-                #fileName = item['full_name'].replace("/", "#") + ".zip"
-                #wget.download(fileToDownload, out=OUTPUT_FOLDER + fileName)
-                # Update repositories counter
-                countOfRepositories = countOfRepositories + 1
+        # Results are in different pages
+        for currentPage in range(1, numberOfPages + 1):
+            print("Processing page " + str(currentPage) + " of " + str(numberOfPages) + " ...")
+            url = build_url(day,month,year) + "&page=" + str(currentPage)
+            json_response = getUrl(url)
+            if not json_response:
+                break
+            data = json.loads(json.dumps(json_response))
 
-        except:
-            continue
-
-    # A delay between different sub-queries
-    if subquery < len(SUB_QUERIES):
-        print("Sleeping " + str(DELAY_BETWEEN_QUERIES) + " seconds before the new query ...")
+            # Iteration over all the repositories in the current json content page
+            if 'items' in data:
+                for item in data['items']:
+                    # Obtain user and repository names
+                    user = item['owner']['login']
+                    repository = item['name']
+                    url = item['clone_url']
+                    repositories.writerow([user, repository,url])
+                    # Update repositories counter
+                    countOfRepositories = countOfRepositories + 1
+            if not currentPage%8:
+                time.sleep(DELAY_BETWEEN_QUERIES)
         time.sleep(DELAY_BETWEEN_QUERIES)
 
-print("DONE! " + str(countOfRepositories) + " repositories have been processed.")
-csv_file.close()
+
+    print("DONE! " + str(countOfRepositories) + " repositories have been processed.")
+    csv_file.close()

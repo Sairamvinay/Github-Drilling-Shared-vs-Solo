@@ -122,4 +122,5 @@ while num_covered_issues <= total_issues:
 time_diff = pd.to_datetime(df_issues['closed_at']) - pd.to_datetime(df_issues['created_at'])
 df_issues['Latency_issues'] = time_diff
 print(time_diff.mean(),' is average time to close issues')
+print((float(total_closed_issues)/total_issues),"is proportion of how many closed issues")
 df_issues.to_csv("results_issues.csv")

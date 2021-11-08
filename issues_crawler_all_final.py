@@ -156,6 +156,7 @@ def get_developer_per_issue(repo_url):
 
 def save_checkpoint(out_df,row_val):
     if (row_val % 100 == 0 and row_val != 0):
+        out_df = out_df.rename(columns = dict(enumerate(['url','num_contributors','total closed issued','total issues','avg contributor per issue','average latency','filename'])))
         out_df.to_csv(f"{CHECKPOINT_DIR}{INPUT_CSV_FILE[:-4]}_ROW_{row_val}.csv",index = False)
 
 ########
@@ -215,12 +216,12 @@ for row in range(0,SAMPLE_LIMIT):
             print(time_diff.mean(),' is average time to close issues')
             print((float(total_closed_issues)/total_issues),"is proportion of how many closed issues")
 
-            res_df = res_df.append(pd.Series([repo_url,num_contributors, total_closed_issues, total_issues, time_diff.mean(),repo_date[:-4]]), ignore_index = True)
+            res_df = res_df.append(pd.Series([repo_url,num_contributors, total_closed_issues, total_issues, avg_dev_per_repo_issue,time_diff.mean(),repo_date[:-4]]), ignore_index = True)
 
     save_checkpoint(res_df,row)
 
 
-res_df = res_df.rename(columns = dict(enumerate(['url','num_contributors','total closed issued','total issues','average latency','filename'])))
+res_df = res_df.rename(columns = dict(enumerate(['url','num_contributors','total closed issued','total issues','avg contributor per issue','average latency','filename'])))
 print(number_of_non_zero_repos,' many non-zero repos')
 
 end_time = time.time()

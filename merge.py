@@ -1,25 +1,31 @@
 import os
 import pandas as pd
+import numpy as np
 cwd = os.path.abspath('') 
 files = os.listdir(cwd)  
-
+np.random.seed(999)
 ## Method 1 gets the first sheet of a given file
 df = pd.DataFrame()
+temp=''
+file_finals = []
 for file in files:
-    if file.endswith('.xlsx'):
-        df = df.append(pd.read_excel(file), ignore_index=True) 
+    if file.endswith('.csv'):
+        print(file)
+
+        file_finals += [str(file)]* 1001
+        temp=pd.read_csv(file,names=['User',"Name","Url"],skiprows=1,nrows=1001)
+        print(temp.shape)
+        df = df.append(temp, ignore_index=True) 
+print(len(file_finals))
+print(df.shape)
+
+df['FileName']=file_finals
+
 df.head() 
-df.to_excel('one_sheet_excel.xlsx')
+df.to_csv('one_sheet_excel.csv',index=False)
 
+df2 = pd.read_csv('one_sheet_excel.csv',names=['User',"Name","Url",'FileName'], header=None)
 
+ds = df2.sample(frac=1)
+ds.to_csv('one_sheet_excel_shuffle.csv',index=False)
 
-## Method 2 gets all sheets of a given file
-df_total = pd.DataFrame()
-for file in files:                         # loop through Excel files
-    if file.endswith('.xlsx'):
-        excel_file = pd.ExcelFile(file)
-        sheets = excel_file.sheet_names
-        for sheet in sheets:               # loop through sheets inside an Excel file
-            df = excel_file.parse(sheet_name = sheet)
-            df_total = df_total.append(df)
-df_total.to_excel('combined_sample_file.xlsx')

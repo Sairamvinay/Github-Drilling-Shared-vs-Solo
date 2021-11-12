@@ -32,12 +32,7 @@ In this repository, we have committed and worked on several programming projects
 Every content has its own purpose that is linked to other files. Every file is free to view, and edit for further research purposes. 
 
 ## Link to Progress Report
-[link](https://docs.google.com/document/d/1SnCGZZId4t1AHfkppjk1gO1tNbS_FJuzwy9lyC_tc_Y/edit?usp=sharing)
+Use this [link](https://docs.google.com/document/d/1SnCGZZId4t1AHfkppjk1gO1tNbS_FJuzwy9lyC_tc_Y/edit?usp=sharing) to visit Google Doc for detailed overview of the project. 
 
-## References
-([label]: Vasilescu, Bogdan, et al. "The sky is not the limit: multitasking across GitHub projects." Proceedings of the 38th International Conference on Software Engineering. 2016.)
-([label]: Jarczyk, O., Jaroszewicz, S., Wierzbicki, A., Pawlak, K., & Jankowski-Lorek, M. (2018). Surgical teams on github: Modeling performance of github project development processes. Information and Software Technology, 100, 32–46. https://doi.org/10.1016/j.infsof.2018.03.010)
-([label]: Krishnan, Mayuram S., et al. "An empirical analysis of productivity and quality in software products." Management science 46.6 (2000): 745-759. ) 
-([label]: Tohidi, Hamid, and Mohammad Jafar Tarokh. "Productivity outcomes of teamwork as an effect of information technology and team size." International Journal of Production Economics 103.2 (2006): 610-615.)
 
 > ECS 260: Software Engineering Fall 2021  @The University of California, Davis

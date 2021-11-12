@@ -39,4 +39,5 @@ Use this [link](https://docs.google.com/document/d/1rW-i0BhQkm2TUJ87Rs1wZ_mWxzvZ
 Use this [link](https://docs.google.com/document/d/1SnCGZZId4t1AHfkppjk1gO1tNbS_FJuzwy9lyC_tc_Y/edit?usp=sharing) to visit Google Doc for detailed overview/progress of the project. 
 
 > This project is entitled to Seongwoo Choi, Terry Guan, Sutej Kulkarni, Jinxiao (Jason) Song, Sairamvinay Vijayaraghavan
-> ECS 260: Software Engineering Fall 2021  @The University of California, Davis
+
+ECS 260: Software Engineering Fall 2021  @The University of California, Davis

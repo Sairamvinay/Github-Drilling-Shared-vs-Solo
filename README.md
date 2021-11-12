@@ -31,8 +31,12 @@ Based on the research questions, we attempt to validate our hypothesis on the ro
 In this repository, we have committed and worked on several programming projects to conduct our research project. 
 Every content has its own purpose that is linked to other files. Every file is free to view, and edit for further research purposes. 
 
+## Link to Project Proposal
+Use this [link](https://docs.google.com/document/d/1rW-i0BhQkm2TUJ87Rs1wZ_mWxzvZEWk6vASmrXw_kJM/edit?usp=sharing) to visit Google Doc for detailed proposal of the project. 
+
+
 ## Link to Progress Report
-Use this [link](https://docs.google.com/document/d/1SnCGZZId4t1AHfkppjk1gO1tNbS_FJuzwy9lyC_tc_Y/edit?usp=sharing) to visit Google Doc for detailed overview of the project. 
+Use this [link](https://docs.google.com/document/d/1SnCGZZId4t1AHfkppjk1gO1tNbS_FJuzwy9lyC_tc_Y/edit?usp=sharing) to visit Google Doc for detailed overview/progress of the project. 
 
-
+> This project is entitled to Seongwoo Choi, Terry Guan, Sutej Kulkarni, Jinxiao (Jason) Song, Sairamvinay Vijayaraghavan
 > ECS 260: Software Engineering Fall 2021  @The University of California, Davis

@@ -61,6 +61,8 @@ if not os.path.isdir(CHECKPOINT_DIR):
 #############
 # Functions #
 #############
+
+# Procure the Github repo URL
 def getUrl(url):
     global total_calls, authorization
     """ Given a URL it returns its body """
@@ -86,18 +88,21 @@ def getUrl(url):
             return False 
     return response
 
+# Get the top ten contributors of the Github repo
 def get_contributors_top_ten_url(repo_owner, repo_name):
     global authorization
     contributors_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/contributors?per_page=10"
     response = getUrl(contributors_url)
     return response
 
+# Get all the contributors of the URL 
 def get_contributors_url(repo_owner, repo_name):
     global authorization
     url = f'https://api.github.com/repos/{repo_owner}/{repo_name}/contributors?per_page=1&anon=true'
     response = getUrl(url)
     return response
 
+# Get the cross developers 
 def get_cross_dev(repo_owner,repo_name,repo_url,day,month,year):
     
     excel_date = datetime.date(int(year),int(month),int(day))
@@ -200,7 +205,7 @@ def getTotalCount(repo_owner,repo_name):
 
 
 
-
+# Get the number of forks in the repo 
 def getForksSize(repo_owner,repo_name):
 
     url = f'https://api.github.com/repos/{repo_owner}/{repo_name}'
@@ -220,7 +225,7 @@ def getForksSize(repo_owner,repo_name):
 
     return forks,size
 
-
+# Get the number of issues in a repo
 def getIssues(repo_owner,repo_name,num_total,num_closed):
     df_issues = pd.DataFrame()
     perPage = 100
@@ -247,7 +252,7 @@ def getIssues(repo_owner,repo_name,num_total,num_closed):
 
 
 
-    
+# Prints the total and closed number of issues per repo
 def getIssueMetrics(repo_owner,repo_name):
     #get total issue count
     num_total,num_closed = getTotalCount(repo_owner,repo_name)
@@ -263,6 +268,7 @@ def getIssueMetrics(repo_owner,repo_name):
 
     return 0,pd.DataFrame()
 
+# Get the latency to close an issue 
 def getLatency(num_closed_issues):
     if not num_closed_issues.empty:
         time_diff = pd.to_datetime(num_closed_issues['closed_at']) - pd.to_datetime(num_closed_issues['created_at'])
@@ -270,6 +276,7 @@ def getLatency(num_closed_issues):
 
     return 0
 
+# Get the number of comments 
 def getComments(num_closed_issues):
     if not num_closed_issues.empty:
         comments = num_closed_issues['comments']
@@ -290,7 +297,7 @@ def save_checkpoint(out_df,row_val):
         out_df = out_df.rename(columns = dict(enumerate(['url','num_contributors','total closed issued','total issues','avg contributor per issue','average latency','filename'])))
         out_df.to_csv(f"{CHECKPOINT_DIR}{INPUT_CSV_FILE[:-4]}_ROW_{row_val}.csv",index = False)
 
-
+# Get all the features of the repo 
 def get_repo_features(url,repo_owner,repo_name,day,month,year,filename):
 
     df_repo = pd.DataFrame(columns = cols)

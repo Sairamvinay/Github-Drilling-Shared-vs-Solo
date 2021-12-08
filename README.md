@@ -13,7 +13,7 @@ The goal of this paper is to investigate the correlation between shared developm
 
 
 ## Research Questions and Hypothesis
-### Research and practice of software development are performed under various assumptions, their relationship with hypotheses, and discovered facts for validation. Based on the extensive empirical studies we have investigated, we have constructed several hypotheses for this research:
+Research and practice of software development are performed under various assumptions, their relationship with hypotheses, and discovered facts for validation. Based on the extensive empirical studies we have investigated, we have constructed several hypotheses for this research:
 
 - **Research Question I**: In general, we know that more people working on development can improve productivity. Hence, we want to discover whether in open source software development: In an OSS medium, we can observe in general that more people working on development tends to improve productivity (by solving the proposed problems faster), but will this trend persist whenever there are more people working on the same project. We seek to answer whether for any project: With a larger software development team (more developers working on the same project), is there effectively a lower issue closure latency in open source projects? 
 
@@ -53,7 +53,9 @@ Use this [link](https://docs.google.com/document/d/1rW-i0BhQkm2TUJ87Rs1wZ_mWxzvZ
 ## Link to Progress Report
 Use this [link](https://docs.google.com/document/d/1SnCGZZId4t1AHfkppjk1gO1tNbS_FJuzwy9lyC_tc_Y/edit?usp=sharing) to visit Google Doc for detailed overview/progress of the project. 
 
-> This project is entitled to Seongwoo Choi, Terry Guan, Sutej Kulkarni, Jinxiao (Jason) Song, Sairamvinay Vijayaraghavan
+
 
 ECS 260: Software Engineering Fall 2021  @The University of California, Davis
-![](https://www.google.com/url?sa=i&url=https%3A%2F%2Fworldvectorlogo.com%2Flogo%2Fuc-davis&psig=AOvVaw3qubUieRqzJPtgU6fhDy1Y&ust=1639075262069000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCOiEgKjt1PQCFQAAAAAdAAAAABAJ)
+
+> This project is entitled to Seongwoo Choi, Terry Guan, Sutej Kulkarni, Jinxiao (Jason) Song, Sairamvinay Vijayaraghavan
+![logo](Images/ucdavis-logo.png)

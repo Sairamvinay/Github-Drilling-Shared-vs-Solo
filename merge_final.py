@@ -9,6 +9,7 @@ cwd = os.path.abspath(FOLDER)
 files = os.listdir(cwd)  
 np.random.seed(999)
 
+# Function for iterating over each month
 def iterateMonth(temp,month,filename,perDay = 1000):
     #go thru eaach day (1000s) and pick top 50 in each
 
